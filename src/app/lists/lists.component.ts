@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Member } from '../_models/member';
 import { Pagination } from '../_models/pagination';
 import { MembersService } from '../_services/members.service';
@@ -16,20 +15,20 @@ export class ListsComponent implements OnInit {
   pageSize = 5;
   pagination: Pagination;
 
-  constructor(private membersServices: MembersService) { }
+  constructor(private membersService: MembersService) { }
 
   ngOnInit(): void {
     this.loadLikes();
   }
 
   loadLikes(): void{
-    this.membersServices.getLikes(this.predicate, this.pageNumber, this.pageSize).subscribe((response) => {
-      this.members =  response.result;
+    this.membersService.getLikes(this.predicate,this.pageNumber,this.pageSize).subscribe(response=>{
+      this.members = response.result;
       this.pagination = response.pagination;
-    })
+    });
   }
 
-  pageChaged(event: any): void {
+  pageChanged(event:any): void{
     this.pageNumber = event.page;
     this.loadLikes();
   }
